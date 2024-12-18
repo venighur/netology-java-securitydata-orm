@@ -10,17 +10,18 @@ import lombok.*;
 @Setter
 @ToString
 @Entity
+@IdClass(PersonId.class)
 @Table(name = "persons")
 public class Person {
     @Id
-    private long id;
-
     @Column(nullable = false)
     private String name;
 
+    @Id
     @Column(nullable = false)
     private String surname;
 
+    @Id
     @Column(nullable = false)
     private int age;
 
