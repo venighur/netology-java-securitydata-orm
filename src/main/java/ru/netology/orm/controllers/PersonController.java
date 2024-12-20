@@ -18,12 +18,12 @@ public class PersonController {
 
     @GetMapping("/persons/by-city")
     public List<Person> getPersonByCity(@RequestParam String city) {
-        return repository.findByCityOfLivingIgnoreCase(city);
+        return repository.findByCityQuery(city);
     }
 
     @GetMapping("/persons/by-age")
     public List<Person> getPersonByAge(@RequestParam int age) {
-        return repository.findByAgeLessThanOrderByAgeAsc(age);
+        return repository.findByAgeQuery(age);
     }
 
     @GetMapping("/persons/by-name")
@@ -31,12 +31,6 @@ public class PersonController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String surname
     ) {
-        if (name == null) {
-            return repository.findBySurname(surname);
-        } else if (surname == null) {
-            return repository.findByName(name);
-        }
-
-        return repository.findByNameAndSurname(name, surname);
+        return repository.findByNameAndSurnameQuery(name, surname);
     }
 }
