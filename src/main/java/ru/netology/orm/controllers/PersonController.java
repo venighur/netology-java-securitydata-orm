@@ -18,6 +18,25 @@ public class PersonController {
 
     @GetMapping("/persons/by-city")
     public List<Person> getPersonByCity(@RequestParam String city) {
-        return repository.getPersonsByCity(city);
+        return repository.findByCityOfLivingIgnoreCase(city);
+    }
+
+    @GetMapping("/persons/by-age")
+    public List<Person> getPersonByAge(@RequestParam int age) {
+        return repository.findByAgeLessThanOrderByAgeAsc(age);
+    }
+
+    @GetMapping("/persons/by-name")
+    public List<Person> getPersonByNameAndSurname(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String surname
+    ) {
+        if (name == null) {
+            return repository.findBySurname(surname);
+        } else if (surname == null) {
+            return repository.findByName(name);
+        }
+
+        return repository.findByNameAndSurname(name, surname);
     }
 }
